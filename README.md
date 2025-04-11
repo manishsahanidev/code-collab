@@ -82,4 +82,3 @@ npm start
 - **Search & Filter**: Find snippets by tags, language, or content
 - **Responsive Design**: Works on desktop and mobile devices
 
-Snippets Simplified, Collaboration Amplified.
