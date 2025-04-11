@@ -10,7 +10,7 @@ export const createSnippet = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { title, code, language, description, tags, owner } = req.body;
+    const { title, code, language, description, tags } = req.body;
     const userId = (req as AuthenticatedRequest).userId;
 
     const snippet = new Snippet({
