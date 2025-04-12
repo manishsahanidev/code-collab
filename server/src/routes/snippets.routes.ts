@@ -4,6 +4,7 @@ import {
   createSnippet,
   getSnippetById,
   getSnippets,
+  updateSnippet,
 } from "../controllers/snippet.controller";
 
 const router = Router();
@@ -11,5 +12,6 @@ const router = Router();
 router.post("/", auth, createSnippet);
 router.get("/", getSnippets);
 router.get("/:id", getSnippetById);
+router.put("/:id", auth, updateSnippet);
 
 export default router;

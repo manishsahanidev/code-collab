@@ -55,3 +55,33 @@ export const getSnippetById = async (
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const updateSnippet = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { title, code, language, description, tags } = req.body;
+    const userId = (req as AuthenticatedRequest).userId;
+
+    const snippet = await Snippet.findById(req.params.id);
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    // Owner of snippet check
+    if (snippet.owner.toString() !== userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const updatedSnippet = await Snippet.findByIdAndUpdate(
+      req.params.id,
+      { title, code, language, description, tags },
+      { new: true }
+    );
+    res.status(200).json(updatedSnippet);
+  } catch (error) {
+    console.error("Error while updating snippet", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
