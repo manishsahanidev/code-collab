@@ -111,3 +111,28 @@ export const deleteSnippet = async (
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const likeSnippet = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const userId = (req as any).userId;
+    const snippet = await Snippet.findById(req.params.id);
+
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    if (snippet.likes.includes(userId)) {
+      // Unlike
+      snippet.likes = snippet.likes.filter((id) => id.toString() !== userId);
+    } else {
+      snippet.likes.push(userId);
+    }
+    await snippet.save();
+    res.status(200).json(snippet);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

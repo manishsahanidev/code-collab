@@ -5,6 +5,7 @@ import {
   deleteSnippet,
   getSnippetById,
   getSnippets,
+  likeSnippet,
   updateSnippet,
 } from "../controllers/snippet.controller";
 
@@ -15,5 +16,6 @@ router.get("/", getSnippets);
 router.get("/:id", getSnippetById);
 router.put("/:id", auth, updateSnippet);
 router.delete("/:id", auth, deleteSnippet);
+router.put("/:id/like", auth, likeSnippet);
 
 export default router;
