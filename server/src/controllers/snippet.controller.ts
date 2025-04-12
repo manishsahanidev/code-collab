@@ -39,3 +39,19 @@ export const getSnippets = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getSnippetById = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const snippet = await Snippet.findById(req.params.id);
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+    res.status(200).json(snippet);
+  } catch (error) {
+    console.error("Error getting snippet by ID", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
