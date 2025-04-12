@@ -2,6 +2,7 @@ import { Router } from "express";
 import { auth } from "../middleware/auth";
 import {
   createSnippet,
+  deleteSnippet,
   getSnippetById,
   getSnippets,
   updateSnippet,
@@ -13,5 +14,6 @@ router.post("/", auth, createSnippet);
 router.get("/", getSnippets);
 router.get("/:id", getSnippetById);
 router.put("/:id", auth, updateSnippet);
+router.delete("/:id", auth, deleteSnippet);
 
 export default router;
