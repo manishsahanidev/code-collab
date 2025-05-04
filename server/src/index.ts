@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import { connectDB } from "./config/db";
 import dotenv from "dotenv";
+import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth.routes";
 import snippetRoutes from "./routes/snippets.routes";
@@ -13,7 +14,7 @@ dotenv.config();
 connectDB();
 
 // Middleware
-//app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Routes

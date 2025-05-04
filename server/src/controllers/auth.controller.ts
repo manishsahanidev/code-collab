@@ -19,8 +19,16 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ token });
+    res.status(201).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
@@ -36,8 +44,17 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
       expiresIn: "1h",
     });
-    res.status(201).json({ token });
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };

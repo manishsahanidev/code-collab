@@ -1,18 +1,21 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
-interface IUser {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
   createdAt: Date;
 }
 
-const userSchema = new Schema<IUser>({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+const userSchema = new Schema<IUser>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 // Mongoose middleware
 userSchema.pre("save", async function (next) {
