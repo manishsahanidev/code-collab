@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { LoginData } from '../services/authService';
+import './AuthPages.css';
 
 const LoginPage = () => {
-    const [formData, setFormData] = useState({
+    const { login, loading, error } = useAuth();
+    const [formData, setFormData] = useState<LoginData>({
         email: '',
         password: ''
     });
@@ -14,36 +19,89 @@ const LoginPage = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Login submitted', formData);
-        // We'll implement actual login functionality later
+        await login(formData);
     };
 
     return (
-        <div className="login-page">
-            <h2>Login</h2>
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={onChange}
-                        required
-                    />
+        <div className="auth-container">
+            <div className="auth-card">
+                <div className="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to continue to CodeCollab</p>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={onChange}
-                        required
-                    />
+
+                {error && (
+                    <div className="error-message">
+                        <span className="error-icon">⚠️</span>
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={onSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <div className="input-with-icon">
+                            <span className="input-icon">📧</span>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={email}
+                                onChange={onChange}
+                                placeholder="your@email.com"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <div className="input-with-icon">
+                            <span className="input-icon">🔒</span>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={password}
+                                onChange={onChange}
+                                placeholder="Your password"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="auth-button"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <span className="loading-spinner">
+                                <span className="spinner"></span>
+                                Signing in...
+                            </span>
+                        ) : 'Sign In'}
+                    </button>
+                </form>
+
+                <div className="auth-footer">
+                    <p>
+                        Don't have an account? <Link to="/register" className="auth-link">Create Account</Link>
+                    </p>
                 </div>
-                <button type="submit">Login</button>
-            </form>
+            </div>
+
+            <div className="auth-info">
+                <div className="auth-info-content">
+                    <h3>Code Better Together</h3>
+                    <p>Join our community of developers sharing and collaborating on code snippets.</p>
+                    <ul className="auth-features">
+                        <li>✓ Share code in 100+ languages</li>
+                        <li>✓ Collaborate in real-time</li>
+                        <li>✓ Create private snippets</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 };

@@ -42,10 +42,60 @@ button:hover {
   background-color: #357;
 }
 
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .login-page,
 .register-page,
 .home-page {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.error-message {
+  background-color: #ffdddd;
+  color: #ff0000;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ffcccc;
+}
+
+.logoutbtn {
+  background-color: #e74c3c;
+}
+
+.logoutbtn:hover {
+  background-color: #c0392b;
+}
+
+/* Snippets page styles */
+.snippets-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.snippets-list {
+  list-style: none;
+  padding: 0;
+}
+
+.snippet-item {
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.snippet-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
 }
