@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './HomePage.css';
+import '../styles/HomePage.css'
 
 const HomePage = () => {
     const { isAuthenticated } = useAuth();
@@ -58,11 +58,6 @@ const HomePage = () => {
                         <p>Create and share code snippets with syntax highlighting for over 100 languages.</p>
                     </div>
                     <div className="feature-card">
-                        <div className="feature-icon">👥</div>
-                        <h3>Real-time Collaboration</h3>
-                        <p>Work together with your team in real-time, seeing changes as they happen.</p>
-                    </div>
-                    <div className="feature-card">
                         <div className="feature-icon">🔒</div>
                         <h3>Secure Storage</h3>
                         <p>All your code snippets are securely stored and accessible only by you and your collaborators.</p>
@@ -78,7 +73,7 @@ const HomePage = () => {
             {/* Call to Action Section */}
             <section className="cta-section">
                 <h2>Ready to start coding together?</h2>
-                <p>Join thousands of developers who are already using CodeCollab to share and collaborate.</p>
+                <p>Join thousands of developers who are already using CodeCollab to share and collaborate.[Not true]</p>
                 {!isAuthenticated && (
                     <Link to="/register" className="cta-button">
                         Create Free Account

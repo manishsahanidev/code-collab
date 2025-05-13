@@ -18,7 +18,7 @@ const Navbar = () => {
                     {isAuthenticated ? (
                         <>
                             <li><Link to="/snippets">My Snippets</Link></li>
-                            <li><Link to="/create-snippet">Create Snippet</Link></li>
+                            <li><Link to="/create-snippet">Create Snippet [+] </Link></li>
                             <li><button onClick={logout} className='logoutbtn'>Logout</button></li>
                         </>
                     ) : (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface Snippet {
     _id: string;
@@ -82,7 +83,9 @@ const SnippetsPage = () => {
                 <ul className="snippets-list">
                     {snippets.map(snippet => (
                         <li key={snippet._id} className="snippet-item">
-                            <h3>{snippet.title}</h3>
+                            <h3>
+                                <Link to={`/snippet/${snippet._id}`}>{snippet.title}</Link>
+                            </h3>
                             <p>{snippet.description}</p>
                             <div className="snippet-meta">
                                 <span>Language: {snippet.language}</span>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { createSnippet, CreateSnippetData } from '../services/snippetService';
-import './CreateSnippetPage.css'; // We'll create this CSS file next
+import '../styles/CreateSnippetPage.css';
 
 const CreateSnippetPage = () => {
     const { token, isAuthenticated } = useAuth();

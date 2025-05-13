@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { RegisterData } from '../services/authService';
-import './AuthPages.css';
+import '../styles/AuthPages.css';
 
 interface RegisterFormData extends RegisterData {
     confirmPassword: string;

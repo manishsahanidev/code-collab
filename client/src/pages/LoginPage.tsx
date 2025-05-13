@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { LoginData } from '../services/authService';
-import './AuthPages.css';
+import '../styles/AuthPages.css';
 
 const LoginPage = () => {
     const { login, loading, error } = useAuth();

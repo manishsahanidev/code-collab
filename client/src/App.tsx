@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import SnippetsPage from "./pages/SnippetsPage";
 import CreateSnippetPage from "./pages/CreateSnippetPage";
+import SnippetDetailPage from "./pages/SnippetDetailPage";
 import { AuthProvider } from "./context/AuthContext";
 import React from "react";
 
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/snippets" element={<SnippetsPage />} />
               <Route path="/create-snippet" element={<CreateSnippetPage />} />
+              <Route path="/snippet/:id" element={<SnippetDetailPage />} />
             </Routes>
           </main>
         </div>
