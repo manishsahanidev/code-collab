@@ -5,6 +5,7 @@ import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth.routes";
 import snippetRoutes from "./routes/snippets.routes";
+import userRoutes from "./routes/user.routes";
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/snippet", snippetRoutes);
+app.use("/api/users", userRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

@@ -34,6 +34,7 @@ const RegisterPage = () => {
         }
 
         // Remove confirmPassword before sending to API
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { confirmPassword: _, ...registerData } = formData;
         await register(registerData);
     };

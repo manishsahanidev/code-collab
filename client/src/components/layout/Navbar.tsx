@@ -4,7 +4,7 @@ import './Navbar.css';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout, user } = useAuth();
 
     return (
         <header>
@@ -18,7 +18,12 @@ const Navbar = () => {
                     {isAuthenticated ? (
                         <>
                             <li><Link to="/snippets">My Snippets</Link></li>
-                            <li><Link to="/create-snippet">Create Snippet [+] </Link></li>
+                            <li><Link to="/create-snippet">Create Snippet</Link></li>
+                            <li>
+                                <Link to="/profile" className="profile-link">
+                                    {user?.name?.split(' ')[0] || 'Profile'}
+                                </Link>
+                            </li>
                             <li><button onClick={logout} className='logoutbtn'>Logout</button></li>
                         </>
                     ) : (

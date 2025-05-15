@@ -5,6 +5,10 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  bio?: string;
+  website?: string;
+  location?: string;
+  profilePicture?: string;
   createdAt: Date;
 }
 
@@ -13,6 +17,10 @@ const userSchema = new Schema<IUser>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    bio: { type: String },
+    website: { type: String },
+    location: { type: String },
+    profilePicture: { type: String },
   },
   { timestamps: true }
 );

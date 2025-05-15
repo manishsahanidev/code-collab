@@ -75,6 +75,19 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.auth-form input#name {
+  padding-left: 40px;
+}
+.auth-form input#email {
+  padding-left: 40px;
+}
+.auth-form input#password {
+  padding-left: 40px;
+}
+.auth-form input#confirmPassword {
+  padding-left: 40px;
+}
+
 .auth-form input:focus {
   border-color: #4a90e2;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);

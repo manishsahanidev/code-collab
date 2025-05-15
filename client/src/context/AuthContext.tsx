@@ -17,6 +17,7 @@ interface AuthContextType {
     login: (data: LoginData) => Promise<void>;
     register: (data: RegisterData) => Promise<void>;
     logout: () => void;
+    updateUserData: (userData: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,14 +31,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const isAuthenticated = !!token;
 
+    // Load user data from localStorage on initial load
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                setUser(JSON.parse(storedUser));
+            } catch (err) {
+                console.error("Error parsing stored user data:", err);
+                localStorage.removeItem('user');
+            }
+        }
+    }, []);
+
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
         } else {
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
             setUser(null);
         }
     }, [token]);
+
+    // Store user data whenever it changes
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+    }, [user]);
 
     const login = async (data: LoginData) => {
         try {
@@ -89,8 +111,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         navigate('/login');
     };
 
+    // New function to update user data after profile updates
+    const updateUserData = (userData: Partial<User>) => {
+        if (user) {
+            setUser({
+                ...user,
+                ...userData
+            });
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ token, user, isAuthenticated, loading, error, login, register, logout }}>
+        <AuthContext.Provider value={{
+            token,
+            user,
+            isAuthenticated,
+            loading,
+            error,
+            login,
+            register,
+            logout,
+            updateUserData
+        }}>
             {children}
         </AuthContext.Provider>
     );
