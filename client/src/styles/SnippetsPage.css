@@ -48,58 +48,69 @@
   font-size: 1.2rem;
 }
 
-/* Search and Filters */
+/* Search bar and Filters */
 .snippets-filters {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f9fafb, #e5e7eb);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .search-container {
+  flex: 3;
   position: relative;
-  flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #ddd;
+  padding: 10px 36px 10px 14px; /* Space for icon */
+  border: none; /* Borderless for modern look */
   border-radius: 6px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  color: #111827;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle inset shadow */
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .search-input:focus {
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
   outline: none;
+  box-shadow: 0 0 0 2px #60a5fa, 0 0 8px rgba(96, 165, 250, 0.3);
+  transform: translateY(-1px);
 }
 
 .search-icon {
   position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
+  right: 10px;
+  color: #9ca3af;
+  font-size: 16px;
   pointer-events: none;
 }
 
 .language-filter {
-  padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
+  flex: 1;
+  padding: 10px;
+  border: none;
   border-radius: 6px;
-  background-color: white;
-  min-width: 150px;
-  font-size: 1rem;
-  color: #333;
+  font-size: 15px;
+  color: #111827;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .language-filter:focus {
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
   outline: none;
+  box-shadow: 0 0 0 2px #60a5fa, 0 0 8px rgba(96, 165, 250, 0.3);
+  transform: translateY(-1px);
 }
 
 /* Snippet Grid */
@@ -109,9 +120,16 @@
   gap: 1.5rem;
 }
 
+.snippet-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
 .snippet-card {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
   transition: all 0.3s ease;
@@ -119,11 +137,13 @@
   flex-direction: column;
   border: 1px solid #eee;
   height: 100%;
+  cursor: pointer;
 }
 
 .snippet-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #4a90e2;
 }
 
 .snippet-card-header {
@@ -131,6 +151,7 @@
   justify-content: space-between;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(to right, #f9f9ff, #f5f5ff);
 }
 
 .language-badge {
@@ -140,6 +161,7 @@
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-weight: 600;
+  border: 1px solid rgba(25, 118, 210, 0.2);
 }
 
 .likes-badge {
@@ -147,6 +169,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  font-weight: 500;
 }
 
 .snippet-title {
@@ -156,16 +179,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.snippet-title a {
   color: #333;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.snippet-title a:hover {
-  color: #4a90e2;
+  font-weight: 600;
 }
 
 .snippet-preview {
@@ -179,6 +194,18 @@
   min-height: 80px;
   max-height: 80px;
   position: relative;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.snippet-preview::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(to bottom, transparent, #f8f9fa);
 }
 
 .snippet-description {
@@ -211,11 +238,18 @@
   font-size: 0.75rem;
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.snippet-card:hover .snippet-tag {
+  background-color: #e3e3ff;
+  color: #4a4a8a;
 }
 
 .more-tags {
   font-size: 0.75rem;
   color: #888;
+  padding: 0.2rem 0.5rem;
 }
 
 .snippet-date {
@@ -316,6 +350,16 @@
 
   .snippets-filters {
     flex-direction: column;
+    gap: 1rem;
+  }
+
+  .search-container,
+  .language-filter {
+    width: 100%;
+  }
+
+  .language-filter {
+    margin-top: 0.5rem;
   }
 
   .snippets-grid {

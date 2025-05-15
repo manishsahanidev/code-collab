@@ -143,33 +143,35 @@ const SnippetsPage = () => {
             ) : (
                 <div className="snippets-grid">
                     {filteredSnippets.map(snippet => (
-                        <div key={snippet._id} className="snippet-card">
-                            <div className="snippet-card-header">
-                                <span className="language-badge">{snippet.language}</span>
-                                <span className="likes-badge">
-                                    ❤️ {snippet.likes.length}
-                                </span>
-                            </div>
-                            <h3 className="snippet-title">
-                                <Link to={`/snippet/${snippet._id}`}>{snippet.title}</Link>
-                            </h3>
-                            <div className="snippet-preview">
-                                <code>{snippet.code.length > 100 ? `${snippet.code.substring(0, 100)}...` : snippet.code}</code>
-                            </div>
-                            {snippet.description && (
-                                <p className="snippet-description">{snippet.description.length > 120 ?
-                                    `${snippet.description.substring(0, 120)}...` : snippet.description}</p>
-                            )}
-                            <div className="snippet-footer">
-                                <div className="snippet-tags">
-                                    {snippet.tags.slice(0, 3).map((tag, index) => (
-                                        <span key={index} className="snippet-tag">{tag}</span>
-                                    ))}
-                                    {snippet.tags.length > 3 && <span className="more-tags">+{snippet.tags.length - 3}</span>}
+                        <Link to={`/snippet/${snippet._id}`} className="snippet-card-link" key={snippet._id}>
+                            <div className="snippet-card">
+                                <div className="snippet-card-header">
+                                    <span className="language-badge">{snippet.language}</span>
+                                    <span className="likes-badge">
+                                        ❤️ {snippet.likes.length}
+                                    </span>
                                 </div>
-                                <span className="snippet-date">{new Date(snippet.createdAt).toLocaleDateString()}</span>
+                                <h3 className="snippet-title">
+                                    {snippet.title}
+                                </h3>
+                                <div className="snippet-preview">
+                                    <code>{snippet.code.length > 100 ? `${snippet.code.substring(0, 100)}...` : snippet.code}</code>
+                                </div>
+                                {snippet.description && (
+                                    <p className="snippet-description">{snippet.description.length > 120 ?
+                                        `${snippet.description.substring(0, 120)}...` : snippet.description}</p>
+                                )}
+                                <div className="snippet-footer">
+                                    <div className="snippet-tags">
+                                        {snippet.tags.slice(0, 3).map((tag, index) => (
+                                            <span key={index} className="snippet-tag">{tag}</span>
+                                        ))}
+                                        {snippet.tags.length > 3 && <span className="more-tags">+{snippet.tags.length - 3}</span>}
+                                    </div>
+                                    <span className="snippet-date">{new Date(snippet.createdAt).toLocaleDateString()}</span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
