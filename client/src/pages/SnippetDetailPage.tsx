@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { getSnippetById, Snippet } from '../services/snippetService';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { getSnippetById, Snippet, deleteSnippet } from '../services/snippetService';
 import { useAuth } from '../context/AuthContext';
 import '../styles/SnippetDetailPage.css';
+
 const SnippetDetailPage = () => {
     const { id } = useParams<{ id: string }>();
     const { token, user } = useAuth();
+    const navigate = useNavigate();
     const [snippet, setSnippet] = useState<Snippet | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     useEffect(() => {
         const fetchSnippet = async () => {
@@ -31,6 +35,20 @@ const SnippetDetailPage = () => {
 
         fetchSnippet();
     }, [id]);
+
+    const handleDelete = async () => {
+        if (!token || !id) return;
+
+        try {
+            setIsDeleting(true);
+            await deleteSnippet(id, token);
+            navigate('/snippets');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to delete snippet');
+            setIsDeleting(false);
+            setShowDeleteConfirm(false);
+        }
+    };
 
     if (loading) {
         return <div className="snippet-detail-container"><p>Loading snippet...</p></div>;
@@ -85,13 +103,41 @@ const SnippetDetailPage = () => {
                 <Link to="/snippets" className="back-button">Back to Snippets</Link>
                 {isOwner && (
                     <>
-                        {/* Future: Link to Edit Snippet Page */}
-                        {/* <Link to={`/snippet/edit/${snippet._id}`} className="edit-button">Edit</Link> */}
-                        {/* Future: Delete Snippet Button */}
-                        {/* <button className="delete-button">Delete</button> */}
+                        <Link to={`/snippet/edit/${snippet._id}`} className="edit-button">Edit</Link>
+                        <button
+                            className="delete-button"
+                            onClick={() => setShowDeleteConfirm(true)}
+                        >
+                            Delete
+                        </button>
                     </>
                 )}
             </div>
+
+            {showDeleteConfirm && (
+                <div className="delete-confirmation-modal">
+                    <div className="delete-confirmation-content">
+                        <h3>Delete Snippet</h3>
+                        <p>Are you sure you want to delete this snippet? This action cannot be undone.</p>
+                        <div className="delete-confirmation-actions">
+                            <button
+                                className="delete-confirm-button"
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? 'Deleting...' : 'Yes, Delete'}
+                            </button>
+                            <button
+                                className="delete-cancel-button"
+                                onClick={() => setShowDeleteConfirm(false)}
+                                disabled={isDeleting}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
