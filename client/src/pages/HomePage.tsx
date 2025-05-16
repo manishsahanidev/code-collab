@@ -81,6 +81,7 @@ const HomePage = () => {
                 )}
             </section>
 
+            {/* Footer */}
             <div className="home-footer">
                 <p>CodeCollab - The modern way to share code</p>
             </div>
