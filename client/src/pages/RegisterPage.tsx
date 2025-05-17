@@ -49,7 +49,6 @@ const RegisterPage = () => {
 
                 {(error || passwordError) && (
                     <div className="error-message">
-                        <span className="error-icon">⚠️</span>
                         {error || passwordError}
                     </div>
                 )}
@@ -126,12 +125,7 @@ const RegisterPage = () => {
                         className="auth-button"
                         disabled={loading}
                     >
-                        {loading ? (
-                            <span className="loading-spinner">
-                                <span className="spinner"></span>
-                                Creating account...
-                            </span>
-                        ) : 'Create Account'}
+                        {loading ? 'Creating account...' : 'Create Account'}
                     </button>
                 </form>
 

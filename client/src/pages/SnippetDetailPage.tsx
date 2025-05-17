@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getSnippetById, Snippet, deleteSnippet, likeSnippet } from '../services/snippetService';
+import { getCommentsBySnippet, Comment as CommentType } from '../services/commentService';
 import { useAuth } from '../context/AuthContext';
 import CodeHighlighter from '../components/CodeHighlighter';
+import CommentList from '../components/comments/CommentList';
+import CommentForm from '../components/comments/CommentForm';
 import '../styles/SnippetDetailPage.css';
 
 const SnippetDetailPage = () => {
@@ -15,6 +18,9 @@ const SnippetDetailPage = () => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [isLiking, setIsLiking] = useState(false);
+    const [comments, setComments] = useState<CommentType[]>([]);
+    const [commentsLoading, setCommentsLoading] = useState(false);
+    const [commentsError, setCommentsError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchSnippet = async () => {
@@ -36,6 +42,25 @@ const SnippetDetailPage = () => {
         };
 
         fetchSnippet();
+    }, [id]);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            if (!id) return;
+
+            try {
+                setCommentsLoading(true);
+                setCommentsError(null);
+                const data = await getCommentsBySnippet(id);
+                setComments(data);
+            } catch (err) {
+                setCommentsError(err instanceof Error ? err.message : 'Failed to fetch comments');
+            } finally {
+                setCommentsLoading(false);
+            }
+        };
+
+        fetchComments();
     }, [id]);
 
     const handleDelete = async () => {
@@ -66,6 +91,20 @@ const SnippetDetailPage = () => {
         }
     };
 
+    const handleCommentAdded = async () => {
+        if (!id) return;
+        try {
+            const data = await getCommentsBySnippet(id);
+            setComments(data);
+        } catch (err) {
+            setCommentsError(err instanceof Error ? err.message : 'Failed to refresh comments');
+        }
+    };
+
+    const handleCommentDeleted = (commentId: string) => {
+        setComments(comments.filter(comment => comment._id !== commentId));
+    };
+
     if (loading) {
         return <div className="snippet-detail-container"><p>Loading snippet...</p></div>;
     }
@@ -91,7 +130,6 @@ const SnippetDetailPage = () => {
                 </div>
             </header>
 
-            {/* Like section */}
             <div className="snippet-likes-section">
                 <button
                     onClick={handleLike}
@@ -131,6 +169,29 @@ const SnippetDetailPage = () => {
                     </div>
                 </section>
             )}
+
+            <section className="comments-section">
+                <h3>Comments</h3>
+
+                {commentsError && (
+                    <div className="error-message">Error loading comments: {commentsError}</div>
+                )}
+
+                {commentsLoading ? (
+                    <p>Loading comments...</p>
+                ) : (
+                    <>
+                        <CommentList
+                            comments={comments}
+                            onCommentDeleted={handleCommentDeleted}
+                        />
+                        <CommentForm
+                            snippetId={id || ''}
+                            onCommentAdded={handleCommentAdded}
+                        />
+                    </>
+                )}
+            </section>
 
             <div className="snippet-actions">
                 <Link to="/snippets" className="back-button">Back to Snippets</Link>

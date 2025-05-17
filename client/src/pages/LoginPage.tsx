@@ -32,7 +32,6 @@ const LoginPage = () => {
 
                 {error && (
                     <div className="error-message">
-                        <span className="error-icon">⚠️</span>
                         {error}
                     </div>
                 )}
@@ -75,12 +74,7 @@ const LoginPage = () => {
                         className="auth-button"
                         disabled={loading}
                     >
-                        {loading ? (
-                            <span className="loading-spinner">
-                                <span className="spinner"></span>
-                                Signing in...
-                            </span>
-                        ) : 'Sign In'}
+                        {loading ? 'Signing in...' : 'Sign In'}
                     </button>
                 </form>
 

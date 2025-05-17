@@ -6,6 +6,7 @@ import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth.routes";
 import snippetRoutes from "./routes/snippets.routes";
 import userRoutes from "./routes/user.routes";
+import commentRoutes from "./routes/comment.routes";
 
 const app: Application = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/snippet", snippetRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/comments", commentRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

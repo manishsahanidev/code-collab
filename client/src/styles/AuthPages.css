@@ -122,28 +122,11 @@
   cursor: not-allowed;
 }
 
-/* Loading Spinner */
+/* Loading Spinner - Simplified */
 .loading-spinner {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-}
-
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-  display: inline-block;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* Footer Styling */
@@ -173,13 +156,7 @@
   border-left: 4px solid #e53e3e;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.error-icon {
-  font-size: 1.2rem;
+  text-align: left;
 }
 
 /* Info Side */
