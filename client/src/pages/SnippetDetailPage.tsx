@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getSnippetById, Snippet, deleteSnippet } from '../services/snippetService';
+import { getSnippetById, Snippet, deleteSnippet, likeSnippet } from '../services/snippetService';
 import { useAuth } from '../context/AuthContext';
 import CodeHighlighter from '../components/CodeHighlighter';
 import '../styles/SnippetDetailPage.css';
@@ -14,6 +14,7 @@ const SnippetDetailPage = () => {
     const [error, setError] = useState<string | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [isLiking, setIsLiking] = useState(false);
 
     useEffect(() => {
         const fetchSnippet = async () => {
@@ -51,6 +52,20 @@ const SnippetDetailPage = () => {
         }
     };
 
+    const handleLike = async () => {
+        if (!token || !id || !user) return;
+
+        try {
+            setIsLiking(true);
+            const updatedSnippet = await likeSnippet(id, token);
+            setSnippet(updatedSnippet);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to like snippet');
+        } finally {
+            setIsLiking(false);
+        }
+    };
+
     if (loading) {
         return <div className="snippet-detail-container"><p>Loading snippet...</p></div>;
     }
@@ -64,6 +79,7 @@ const SnippetDetailPage = () => {
     }
 
     const isOwner = user && snippet.owner === user.id;
+    const isLikedByUser = snippet?.likes.includes(user?.id || '');
 
     return (
         <div className="snippet-detail-container">
@@ -74,6 +90,21 @@ const SnippetDetailPage = () => {
                     <span>Created: {new Date(snippet.createdAt).toLocaleDateString()}</span>
                 </div>
             </header>
+
+            {/* Like section */}
+            <div className="snippet-likes-section">
+                <button
+                    onClick={handleLike}
+                    disabled={isLiking || !user}
+                    className={`like-button ${isLikedByUser ? 'liked' : ''}`}
+                    title={user ? (isLikedByUser ? 'Unlike this snippet' : 'Like this snippet') : 'Please login to like this snippet'}
+                >
+                    <span className="like-icon">{isLikedByUser ? '❤️' : '🤍'}</span>
+                    <span className="like-count">{snippet.likes.length}</span>
+                    <span className="like-text">{snippet.likes.length === 1 ? 'Like' : 'Likes'}</span>
+                </button>
+                {!user && <span className="login-to-like">Login to like this snippet</span>}
+            </div>
 
             {snippet.description && (
                 <section className="snippet-description">
