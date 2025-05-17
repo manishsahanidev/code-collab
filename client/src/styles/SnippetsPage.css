@@ -185,7 +185,7 @@
 
 .snippet-preview {
   background-color: #f8f9fa;
-  padding: 1rem;
+  padding: 0;
   margin: 0;
   overflow: hidden;
   font-family: "Courier New", monospace;
@@ -198,6 +198,13 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
+.snippet-preview pre {
+  margin: 0 !important;
+  height: 80px;
+  max-height: 80px;
+  overflow: hidden;
+}
+
 .snippet-preview::after {
   content: "";
   position: absolute;
@@ -205,7 +212,8 @@
   left: 0;
   right: 0;
   height: 30px;
-  background: linear-gradient(to bottom, transparent, #f8f9fa);
+  background: linear-gradient(to bottom, transparent, rgba(40, 44, 52, 0.9));
+  z-index: 10;
 }
 
 .snippet-description {

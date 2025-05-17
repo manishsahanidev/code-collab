@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { getSnippets } from '../services/snippetService';
+import CodeHighlighter from '../components/CodeHighlighter';
 import '../styles/SnippetsPage.css';
 
 interface Snippet {
@@ -155,7 +156,11 @@ const SnippetsPage = () => {
                                     {snippet.title}
                                 </h3>
                                 <div className="snippet-preview">
-                                    <code>{snippet.code.length > 100 ? `${snippet.code.substring(0, 100)}...` : snippet.code}</code>
+                                    <CodeHighlighter
+                                        code={snippet.code.length > 100 ? `${snippet.code.substring(0, 100)}...` : snippet.code}
+                                        language={snippet.language}
+                                        showLineNumbers={false}
+                                    />
                                 </div>
                                 {snippet.description && (
                                     <p className="snippet-description">{snippet.description.length > 120 ?

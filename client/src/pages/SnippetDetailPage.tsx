@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getSnippetById, Snippet, deleteSnippet } from '../services/snippetService';
 import { useAuth } from '../context/AuthContext';
+import CodeHighlighter from '../components/CodeHighlighter';
 import '../styles/SnippetDetailPage.css';
 
 const SnippetDetailPage = () => {
@@ -83,9 +84,10 @@ const SnippetDetailPage = () => {
 
             <section className="snippet-code-block">
                 <h3>Code</h3>
-                <pre>
-                    <code>{snippet.code}</code>
-                </pre>
+                <CodeHighlighter
+                    code={snippet.code}
+                    language={snippet.language}
+                />
             </section>
 
             {snippet.tags && snippet.tags.length > 0 && (
